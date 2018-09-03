@@ -135,10 +135,11 @@ class GameAppByCreateJs extends EventDispatcher {
     /**
      * 设置提示框的皮肤 class
      * @param skin
-     * @param height
+     * @param size
+     * @param wrapW
      */
-    setAlertSkinClass(skin, height = 400) {
-        Alert.setSkinClass(skin, height);
+    setAlertSkinClass(skin, size = [400, 400], wrapW = 430) {
+        Alert.setSkinClass(skin, size,wrapW);
     }
 
     /**
