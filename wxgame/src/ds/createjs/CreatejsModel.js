@@ -101,7 +101,7 @@ class CreatejsModel {
      */
     setFPS(value) {
 
-        // createjs.Ticker.timingMode =  createjs.Ticker.RAF_SYNCHED;
+        createjs.Ticker.timingMode =  createjs.Ticker.RAF_SYNCHED;
         createjs.Ticker.framerate = value;
 
     }

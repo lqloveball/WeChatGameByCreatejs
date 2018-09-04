@@ -16,7 +16,7 @@ const global = GameGlobal;
 global.GameApp = new GameAppByCreateJs({
     background: '#75e3f2',//背景色
     fps: 60,//刷新率
-    deviceOrientation: 'landscape',//横屏`landscape` 竖屏`portrait`，
+    deviceOrientation: window.innerWidth > window.innerHeight ? 'landscape' : 'portrait',//横屏`landscape` 竖屏`portrait`，
     size: 750,//游戏尺寸， 竖屏下设定固定宽 横屏下设定固定高
     webgl: true, //是否使用到webgl
 });
