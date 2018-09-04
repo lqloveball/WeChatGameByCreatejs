@@ -12,12 +12,51 @@ class CreatejsModel {
 
         this.pause = false;
 
+        //是否使用webgl
+        let _hasWebgl = getDefault(opts.webgl, false);
+        console.log('hasWebgl', _hasWebgl);
+
+
         //设备尺寸
         this._deviceSize = getDefault(opts.size, 750);
         //设备方向
         this._deviceOrientation = getDefault(opts.deviceOrientation, 'portrait');
 
+
         this.stage = new createjs.Stage(canvas);
+
+        if (_hasWebgl) {
+
+            let _canvas =  document.createElement("canvas");
+
+            let _innerWidth = window.innerWidth;
+            let _innerHeight = window.innerHeight;
+
+            if (this.deviceOrientation === 'portrait') {
+                let _scale = _innerWidth / this._deviceSize;
+                _canvas.width = this._deviceSize;
+                _canvas.height = _innerHeight / _scale;
+            }
+            else {
+                let _scale = _innerHeight / this._deviceSize;
+                _canvas.width = _innerWidth / _scale;
+                _canvas.height = this._deviceSize;
+            }
+
+            this.stage3d = new createjs.StageGL(_canvas);
+            this.stage3d.enableMouseOver(false);
+            this.stage.nextStage = this.stage3d;
+
+            this.root3d = new createjs.Container();
+            this.stage3d.addChild(this.root3d);
+
+            this.stage3dBMP=new createjs.Bitmap(_canvas);
+            this.stage.addChild(this.stage3dBMP);
+
+        }
+
+
+
 
         this.root = new createjs.Container();
         this.stage.addChild(this.root);
@@ -70,6 +109,7 @@ class CreatejsModel {
     update() {
         if (this.pause) return;
         this.stage.update();
+        if(this.stage3d)this.stage3d.update();
     }
 
     get width() {
@@ -110,6 +150,7 @@ class CreatejsModel {
             this.stage.canvas.height = this._height;
 
         }
+
         // console.log('upSize', this.deviceOrientation, _innerWidth, _innerHeight, this._width, this._height);
 
     }
@@ -132,9 +173,8 @@ class CreatejsModel {
 }
 
 const global = GameGlobal;
-const root = global;
-root.AdobeAn = root.AdobeAn || {};
-let ds = root.ds = root.ds ? root.ds : {};
+global.AdobeAn = global.AdobeAn || {};
+let ds = global.ds = global.ds ? global.ds : {};
 ds.createjs = ds.createjs ? ds.createjs : {};
 ds.createjs.CreatejsModel = CreatejsModel;
 

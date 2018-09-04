@@ -1,6 +1,6 @@
 import PageBase from "../../ds/createjs/base/PageBase";
 import LoadManager from '../models/LoadManager';
-import GameApp from "../../ds/createjs/base/GameAppByCreateJs";
+
 
 class Main extends PageBase {
     constructor() {
@@ -58,6 +58,16 @@ class Main extends PageBase {
                 btns: ['取消', '继续']
             });
         });
+
+    }
+
+    movieIn() {
+
+        // super.movieIn();
+
+        //使用 webgl 进行渲染
+        GameApp.root3d.addChild(this.view);
+        this.resize();
 
     }
 

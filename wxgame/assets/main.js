@@ -765,6 +765,8 @@ an.getComposition = function(id) {
 	return an.compositions[id];
 }
 
-    var _module={lib:lib,ss:ss,img:img};if(typeof define==="function"&&define.amd){define(["exports"],function(exports){exports=_module;module.exports=exports})}else{if(typeof exports!=="undefined"){exports=_module;module.exports=exports}};
+
+
+var _module={lib:lib,ss:ss,img:img};if(typeof define==="function"&&define.amd){define(["exports"],function(exports){exports=_module;module.exports=exports})}else{if(typeof exports!=="undefined"){exports=_module;module.exports=exports}};
 
 })(createjs = createjs||{}, AdobeAn = AdobeAn||{});

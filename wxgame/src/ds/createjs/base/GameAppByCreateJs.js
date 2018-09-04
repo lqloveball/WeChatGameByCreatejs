@@ -2,6 +2,7 @@ import EventDispatcher from '../../core/EventDispatcher';
 import PageManager from './PageManager';
 import PanelManager from './PanelManager';
 import Alert from '../mui/Alert';
+import {getDefault} from '../../utils/Mixin.js';
 
 const systemInfo = wx.getSystemInfoSync();
 const global = GameGlobal;
@@ -13,15 +14,17 @@ global.ds = global.ds || {};
  */
 class GameAppByCreateJs extends EventDispatcher {
 
-    constructor() {
+    constructor(opts) {
 
         super();
 
-        if (global.GameApp) return;
+        console.log('GameAppByCreateJs');
+        if (global.GameApp) return global.GameApp;
+
         global.GameApp = this;
 
-
-        this._createJsModel = ds.createjs.create();
+        opts = opts || {};
+        this._createJsModel = ds.createjs.create(opts);
 
         this._stage = this._createJsModel.stage;
         this._root = this._createJsModel.root;
@@ -32,7 +35,7 @@ class GameAppByCreateJs extends EventDispatcher {
         this._bg = new createjs.Shape();
         this._bgBox.addChild(this._bg);
         this._stage.addChildAt(this._bgBox, 0);
-        this.background = '#fff';
+        this.background = getDefault(opts.background, '#fff');
 
 
         this._language = navigator.language;
@@ -139,7 +142,7 @@ class GameAppByCreateJs extends EventDispatcher {
      * @param wrapW
      */
     setAlertSkinClass(skin, size = [400, 400], wrapW = 430) {
-        Alert.setSkinClass(skin, size,wrapW);
+        Alert.setSkinClass(skin, size, wrapW);
     }
 
     /**
@@ -294,6 +297,13 @@ class GameAppByCreateJs extends EventDispatcher {
         return this._root;
     }
 
+    get stage3d() {
+        return this._createJsModel.stage3d;
+    }
+
+    get root3d() {
+        return this._createJsModel.root3d;
+    }
     /**
      * 弹出框层
      * @return {*|createjs.Container}
@@ -344,10 +354,11 @@ class GameAppByCreateJs extends EventDispatcher {
         _g.endFill();
         this.update();
         this._bgBox.cache(0, 0, this.createJsModel.width, this.createJsModel.height);
+        // this._bgBox.x=300
     }
 
 
 }
 
-global.GameApp = new GameAppByCreateJs();
-export default global.GameApp;
+
+export default GameAppByCreateJs;
