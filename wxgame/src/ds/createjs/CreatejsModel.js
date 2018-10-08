@@ -27,7 +27,7 @@ class CreatejsModel {
 
         if (_hasWebgl) {
 
-            let _canvas =  document.createElement("canvas");
+            let _canvas = document.createElement("canvas");
 
             let _innerWidth = window.innerWidth;
             let _innerHeight = window.innerHeight;
@@ -50,12 +50,10 @@ class CreatejsModel {
             this.root3d = new createjs.Container();
             this.stage3d.addChild(this.root3d);
 
-            this.stage3dBMP=new createjs.Bitmap(_canvas);
+            this.stage3dBMP = new createjs.Bitmap(_canvas);
             this.stage.addChild(this.stage3dBMP);
 
         }
-
-
 
 
         this.root = new createjs.Container();
@@ -101,15 +99,16 @@ class CreatejsModel {
      */
     setFPS(value) {
 
-        createjs.Ticker.timingMode =  createjs.Ticker.RAF_SYNCHED;
+        createjs.Ticker.timingMode = createjs.Ticker.RAF_SYNCHED;
         createjs.Ticker.framerate = value;
+        wx.setPreferredFramesPerSecond(value);
 
     }
 
     update() {
         if (this.pause) return;
         this.stage.update();
-        if(this.stage3d)this.stage3d.update();
+        if (this.stage3d) this.stage3d.update();
     }
 
     get width() {
